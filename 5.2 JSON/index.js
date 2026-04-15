@@ -20,12 +20,39 @@ app.get("/", (req, res) => {
 app.post("/recipe", (req, res) => {
   //Step 3: Write your code here to make this behave like the solution website.
   var choice = req.body["choice"]
+  var choiceNum = 0;
 
   if (choice == "chicken") {
-      console.log(recipeJSONobj[0].ingredients)
-  }else{
-    console.log("erorr")
+    choiceNum = 0;
+  }else if (choice == "beef"){
+    choiceNum = 1;
+  }else if (choice == "fish"){
+    choiceNum = 2;
   }
+
+  var protein = recipeJSONobj[choiceNum].ingredients.protein.name + " " + recipeJSONobj[choiceNum].ingredients.protein.preparation;
+  var salsa = recipeJSONobj[choiceNum].ingredients.salsa.name;
+  var toppings_0 = recipeJSONobj[choiceNum].ingredients.toppings[0].quantity + " of " + recipeJSONobj[choiceNum].ingredients.toppings[0].name;
+  var toppings_1 = recipeJSONobj[choiceNum].ingredients.toppings[1].quantity + " of " + recipeJSONobj[choiceNum].ingredients.toppings[1].name;
+  var toppings_2 = recipeJSONobj[choiceNum].ingredients.toppings[2].quantity + " of " + recipeJSONobj[choiceNum].ingredients.toppings[2].name;
+  
+  if (choice == "chicken"){
+    let toppings_3 = recipeJSONobj[choiceNum].ingredients.toppings[3].quantity + " of " + recipeJSONobj[choiceNum].ingredients.toppings[3].name;
+
+    console.log(protein);
+    console.log(salsa);
+    console.log(toppings_0)
+    console.log(toppings_1)
+    console.log(toppings_2)
+    console.log(toppings_3)
+  }else{
+    console.log(protein);
+    console.log(salsa);
+    console.log(toppings_0)
+    console.log(toppings_1)
+    console.log(toppings_2)
+  }
+  
 
   //Step 4: Add code to views/index.ejs to use the recieved recipe object.
 });
