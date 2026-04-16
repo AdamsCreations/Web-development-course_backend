@@ -32,26 +32,18 @@ app.post("/recipe", (req, res) => {
 
   var protein = recipeJSONobj[choiceNum].ingredients.protein.name + " " + recipeJSONobj[choiceNum].ingredients.protein.preparation;
   var salsa = recipeJSONobj[choiceNum].ingredients.salsa.name;
-  var toppings_0 = recipeJSONobj[choiceNum].ingredients.toppings[0].quantity + " of " + recipeJSONobj[choiceNum].ingredients.toppings[0].name;
-  var toppings_1 = recipeJSONobj[choiceNum].ingredients.toppings[1].quantity + " of " + recipeJSONobj[choiceNum].ingredients.toppings[1].name;
-  var toppings_2 = recipeJSONobj[choiceNum].ingredients.toppings[2].quantity + " of " + recipeJSONobj[choiceNum].ingredients.toppings[2].name;
-  
-  if (choice == "chicken"){
-    let toppings_3 = recipeJSONobj[choiceNum].ingredients.toppings[3].quantity + " of " + recipeJSONobj[choiceNum].ingredients.toppings[3].name;
+  let toppings = recipeJSONobj[choiceNum].ingredients.toppings.map(t => t.quantity + " of " + t.name);
 
-    console.log(protein);
-    console.log(salsa);
-    console.log(toppings_0)
-    console.log(toppings_1)
-    console.log(toppings_2)
-    console.log(toppings_3)
-  }else{
-    console.log(protein);
-    console.log(salsa);
-    console.log(toppings_0)
-    console.log(toppings_1)
-    console.log(toppings_2)
-  }
+  console.log(protein);
+  console.log(salsa);
+  console.log(toppings);
+
+  res.render("index.ejs",{
+    protein: protein,
+    salsa: salsa,
+    toppings: toppings
+  })
+
   
 
   //Step 4: Add code to views/index.ejs to use the recieved recipe object.
