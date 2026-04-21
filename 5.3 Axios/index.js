@@ -15,14 +15,23 @@ app.get("/", async (req, res) => {
   try {
     const response = await axios.get("https://bored-api.appbrewery.com/random");
     const result = response.data;
+
+    let activity = result.activity;
+    let type = result.type;
+    let participants = result.participants;
+
     res.render("index.ejs", { 
-      data: result, 
+      activity: activity,
+      type: type,
+      participants: participants, 
       error: null
     });
   } catch (error) {
     console.error("Failed to make request:", error.message);
     res.render("index.ejs", {
-      data: null,
+      activity: null,
+      type: null,
+      participants: null, 
       error: error.message,
     });
   }
@@ -53,17 +62,29 @@ app.post("/", async (req, res) => {
     });
 
     const result = response.data;
-    console.log(result);
+    console.log(result)
+    console.log(result.length);
+
+
+    const randomItem = Math.floor(Math.random() * result.length);
+    var activity = result[randomItem].activity;
+    var type = result[randomItem].type;
+    var participants = result[randomItem].participants;
 
     res.render("index.ejs", {
-      data: result,
+      activity: activity,
+      type: type,
+      participants: participants, 
       error: null
     })
 
   } catch(error){
     console.error("Failed to make request:", error.message);
+    
     res.render("index.ejs", {
-      data: null,
+      activity: null,
+      type: null,
+      participants: null, 
       error: error.message,
     });
   }
