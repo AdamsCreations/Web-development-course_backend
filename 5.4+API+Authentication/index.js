@@ -74,15 +74,15 @@ app.get("/apiKey", async (req, res) => {
   try{
     const request = await axios.get(API_URL+"filter", {
       params: {
-        "score[gte]": 5,
-        apiKry: yourAPIKey
+        apiKey: yourAPIKey
       }
     });
 
     const response = request.data;
+    const filtered = response.filter(query => query.score <= 5)
 
     res.render("index.ejs", {
-      content: JSON.stringify(response)
+      content: JSON.stringify(filtered)
     })
   }catch(error){
     res.render("index.ejs", {
@@ -91,7 +91,7 @@ app.get("/apiKey", async (req, res) => {
   }
 });
 
-app.get("/bearerToken", (req, res) => {
+app.get("/bearerToken", async (req, res) => {
   //TODO 5: Write your code here to hit up the /secrets/{id} endpoint
   //and get the secret with id of 42
   //HINT: This is how you can use axios to do bearer token auth:
@@ -103,6 +103,25 @@ app.get("/bearerToken", (req, res) => {
     },
   });
   */
+
+  try{
+    const request = await axios.get(API_URL+"secrets", {
+      headers: {
+        Authorization: yourBearerToken
+      }
+    });
+
+    const response = request.data;
+    const filtered = response.filter(query => query.id == 42);
+
+    res.render("index.ejs", {
+      content: JSON.stringify(filtered)
+    })
+  }catch(error){
+    res.render("index.ejs", {
+      content: error.message
+    })
+  }
 });
 
 app.listen(port, () => {
