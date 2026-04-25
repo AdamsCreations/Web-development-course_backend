@@ -79,7 +79,9 @@ app.get("/apiKey", async (req, res) => {
     });
 
     const response = request.data;
-    const filtered = response.filter(query => query.score <= 5)
+    console.log(response)
+    const filtered = response.filter(item => item.emScore >= 5)
+    console.log(filtered)
 
     res.render("index.ejs", {
       content: JSON.stringify(filtered)
@@ -105,17 +107,17 @@ app.get("/bearerToken", async (req, res) => {
   */
 
   try{
-    const request = await axios.get(API_URL+"secrets", {
+    const request = await axios.get(API_URL+"secrets/42", {
       headers: {
-        Authorization: yourBearerToken
+        Authorization: "Bearer " + yourBearerToken
       }
     });
 
     const response = request.data;
-    const filtered = response.filter(query => query.id == 42);
+    console.log(response)
 
     res.render("index.ejs", {
-      content: JSON.stringify(filtered)
+      content: JSON.stringify(response)
     })
   }catch(error){
     res.render("index.ejs", {
